@@ -1,0 +1,24 @@
+{
+  "name": "e-commerce_store_api",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/Aisdev979/e-commerce_store_api#readme",
+  "bugs": {
+    "url": "https://github.com/Aisdev979/e-commerce_store_api/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Aisdev979/e-commerce_store_api.git"
+  },
+  "license": "MIT",
+  "author": "Ogbebor Aisosa Matthew",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "dotenv": "^18.0.7",
+    "express": "^5.3.0"
+  }
+}
