@@ -90,3 +90,5 @@ const carProducts = [
     stock: 22
   }
 ];
+
+export default carProducts
