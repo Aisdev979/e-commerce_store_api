@@ -31,3 +31,30 @@ export const getAllProducts = async (req, res) => {
     data: paginatedResult
   })
 }
+
+
+export const getProduct = (req, res) => {
+  const { productId } = req.params;
+
+  if(!productId) {
+    const error = new Error("Please provide and ID, can't be empty");
+    error.statusCode = 400;
+    throw error;
+  }
+
+  const carProduct = carProducts.find(product => product.id === parseInt(productId));
+
+  if(!carProduct) {
+    const error = new Error("Parts not found");
+    error.statusCode = 404;
+    throw error;
+  }
+
+  res.status(200).json({
+    success: true,
+    meta: {
+      length: carProduct.length
+    },
+    data: carProduct
+  })
+}
