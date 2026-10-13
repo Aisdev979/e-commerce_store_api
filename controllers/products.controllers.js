@@ -1,16 +1,16 @@
-import carProducts from "../models/data.models.js"
+import products from "../models/products.models.js"
 
 export const getAllProducts = async (req, res) => {
   const {manufacturer, size, page = 1, limit = 5} = req.query;
 
-  let productLists = [...carProducts];
+  let productLists = [...products];
 
   if( manufacturer ) {
     productLists = productLists.filter(product => product.manufacturer.toLowerCase() === manufacturer.toLowerCase());
   }
 
   if( size ) {
-    productLists = productLists.filter(product => product.size.toLowerCase() === size.toLowerCase());
+    productLists = productLists.filter(product => product.size.label.toLowerCase() === size.toLowerCase());
   }
 
   const pageNum = Number.parseInt(page);
@@ -42,7 +42,7 @@ export const getProduct = (req, res) => {
     throw error;
   }
 
-  const carProduct = carProducts.find(product => product.id === parseInt(productId));
+  const carProduct = products.find(product => product.id === parseInt(productId));
 
   if(!carProduct) {
     const error = new Error("Parts not found");
