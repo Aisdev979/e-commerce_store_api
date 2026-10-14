@@ -1,4 +1,5 @@
-import products from "../models/products.models.js"
+import products from "../models/products.models.js";
+import users from "../models/users.models.js";
 
 export const getAllProducts = async (req, res) => {
   const {manufacturer, size, page = 1, limit = 5} = req.query;
@@ -42,7 +43,7 @@ export const getProduct = (req, res) => {
     throw error;
   }
 
-  const carProduct = products.find(product => product.id === parseInt(productId));
+  const carProduct = products.find(product => product.id === Number.parseInt(productId));
 
   if(!carProduct) {
     const error = new Error("Parts not found");
@@ -56,5 +57,48 @@ export const getProduct = (req, res) => {
       length: carProduct.length
     },
     data: carProduct
+  })
+}
+
+export const postProduct = (req, res) => {
+  const { userId } = req.params;
+  const data = req.body;
+
+  if(!userId) {
+    const error = new Error("provided and ID to proceed");
+    error.statusCode = 400;
+    throw error;
+  }
+
+  const manufacturer = users.find(user => user.id === userId);
+
+  if(!manufacturer) {
+    const error = new Error("User not found");
+    error.statusCode = 404;
+    throw error;
+  }
+
+  const lastProductId = products[products.length - 1].id;
+  console.log(lastProductId)
+  const [lastProductLetters , lastProductDigit] = lastProductId.split("_");
+
+  const incrementLastProductDitgit = Number.parseInt(lastProductDigit) + 1;
+
+  const newProductId = `${lastProductLetters}_${incrementLastProductDitgit}`;
+
+  const newProductData = {
+    id: newProductId,
+    user_id: userId,
+    ...data
+  }
+
+  products.push(newProductData),
+
+    console.log(products)
+
+  res.status(201).json({
+    success: true,
+    message: "Product added successfully",
+    newProductData
   })
 }
